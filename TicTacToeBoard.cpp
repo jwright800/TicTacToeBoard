@@ -19,6 +19,11 @@ TicTacToeBoard::TicTacToeBoard()
 **/
 Piece TicTacToeBoard::toggleTurn()
 {
+  if(turn == X){
+    return O;
+  } else {
+    return X;
+  }
   return Invalid;
 }
 
@@ -33,6 +38,21 @@ Piece TicTacToeBoard::toggleTurn()
 **/ 
 Piece TicTacToeBoard::placePiece(int row, int column)
 {
+  if (row >= BOARDSIZE || column >= BOARDSIZE) {
+    return Invalid;
+  }
+  if (board[row][column] == Blank) {
+    board[row][column] = turn;
+    Piece placed = turn;
+    if(turn == X) {
+      turn = O;
+    } else {
+      turn = X;
+    }
+    return placed;
+  } else {
+    return getPiece(row, column);
+  }
   return Invalid;
 }
 
@@ -42,6 +62,11 @@ Piece TicTacToeBoard::placePiece(int row, int column)
 **/
 Piece TicTacToeBoard::getPiece(int row, int column)
 {
+  if (row >= BOARDSIZE || column >= BOARDSIZE) {
+    return Invalid;
+  } else {
+    return board[row][column];
+  }
   return Invalid;
 }
 
@@ -51,5 +76,56 @@ Piece TicTacToeBoard::getPiece(int row, int column)
 **/
 Piece TicTacToeBoard::getWinner()
 {
+  if (getPiece(0, 0) == getPiece(0, 1) && getPiece(0, 0) != Blank) {
+    if(getPiece(0, 0) == getPiece(0, 2)) {
+      return getPiece(0, 0);
+    }
+  }
+  if (getPiece(1, 0) == getPiece(1, 1) && getPiece(1, 0) != Blank) {
+    if(getPiece(1, 0) == getPiece(1, 2)) {
+      return getPiece(1, 0);
+    }
+  }
+  if (getPiece(2, 0) == getPiece(2, 1) && getPiece(2, 0) != Blank) {
+    if(getPiece(2, 0) == getPiece(2, 2)) {
+      return getPiece(2, 0);
+    }
+  }
+  if (getPiece(0, 0) == getPiece(1, 0) && getPiece(0, 0) != Blank) {
+    if(getPiece(0, 0) == getPiece(2, 0)) {
+      return getPiece(0, 0);
+    }
+  }
+  if (getPiece(0, 1) == getPiece(1, 1) && getPiece(0, 1) != Blank) {
+    if(getPiece(0, 1) == getPiece(2, 1)) {
+      return getPiece(0, 1);
+    }
+  }
+  if (getPiece(0, 2) == getPiece(1, 2) && getPiece(0, 2) != Blank) {
+    if(getPiece(0, 2) == getPiece(2, 2)) {
+      return getPiece(0, 2);
+    }
+  }
+  if (getPiece(0, 0) == getPiece(1, 1) && getPiece(0, 0) != Blank) {
+    if(getPiece(0, 0) == getPiece(2, 2)) {
+      return getPiece(0, 0);
+    }
+  }
+  if (getPiece(0, 2) == getPiece(1, 1) && getPiece(0, 2) != Blank) {
+    if(getPiece(1, 1) == getPiece(2, 0)) {
+      return getPiece(1, 1);
+    }
+  }
+  bool not_over = false;
+  for(int i = 0; i < 3; i++) {
+    for(int j = 0; j < 3; j++) {
+      if (getPiece(i, j) == Blank) {
+        not_over = true;
+      }
+    }
+  }
+  if(not_over == true) {
+    return Blank;
+  }
   return Invalid;
 }
