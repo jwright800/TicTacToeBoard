@@ -1,3 +1,9 @@
+/**
+ * Running gcov showed that the toggle turn function never got
+ * called when it was supposed to. Instead I toggled the turn by mistake
+ * in the placePiece function.
+**/
+
 #include "TicTacToeBoard.h"
 /**
  * Class for representing a 3x3 Tic-Tac-Toe game board, using the Piece enum
@@ -20,8 +26,10 @@ TicTacToeBoard::TicTacToeBoard()
 Piece TicTacToeBoard::toggleTurn()
 {
   if(turn == X){
+    turn = O;
     return O;
   } else {
+    turn = X;
     return X;
   }
   return Invalid;
@@ -44,11 +52,12 @@ Piece TicTacToeBoard::placePiece(int row, int column)
   if (board[row][column] == Blank) {
     board[row][column] = turn;
     Piece placed = turn;
-    if(turn == X) {
-      turn = O;
-    } else {
-      turn = X;
-    }
+    toggleTurn();
+    // if(turn == X) {
+    //   turn = O;
+    // } else {
+    //   turn = X;
+    // }
     return placed;
   } else {
     return getPiece(row, column);
